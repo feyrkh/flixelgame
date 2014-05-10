@@ -35,3 +35,7 @@ Icon
 !.gitignore
 *~
 
+out/
+flixelgame.iml
+flixelgame.ipr
+flixelgame.iws
