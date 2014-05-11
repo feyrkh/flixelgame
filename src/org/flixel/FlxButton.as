@@ -221,22 +221,25 @@ package org.flixel
 					if(overlapsPoint(_point,true,camera))
 					{
 						offAll = false;
-						if(FlxG.mouse.justPressed())
-						{
-							status = PRESSED;
-							if(onDown != null)
-								onDown();
-							if(soundDown != null)
-								soundDown.play(true);
-						}
-						if(status == NORMAL)
-						{
-							status = HIGHLIGHT;
-							if(onOver != null)
-								onOver();
-							if(soundOver != null)
-								soundOver.play(true);
-						}
+                        if(FlxG.mouse.pressed()) {
+                            status = PRESSED;
+                            if(FlxG.mouse.justPressed())
+                            {
+                                if(onDown != null)
+                                    onDown();
+                                if(soundDown != null)
+                                    soundDown.play(true);
+                            }
+                        } else {
+                            if(status == NORMAL)
+                            {
+                                if(onOver != null)
+                                    onOver();
+                                if(soundOver != null)
+                                    soundOver.play(true);
+                            }
+                            status = HIGHLIGHT;
+                        }
 					}
 				}
 				if(offAll)
