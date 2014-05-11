@@ -1,4 +1,4 @@
-package
+package com.liquidenthusiasm.engine
 {
 	import org.flixel.system.FlxPreloader;
 
@@ -6,7 +6,7 @@ package
 	{
 		public function Preloader():void
 		{
-			className = "Flixelgame";
+			className = "com.liquidenthusiasm.engine.Flixelgame";
 			super();
 		}
 	}

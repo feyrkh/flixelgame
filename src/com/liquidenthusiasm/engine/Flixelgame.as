@@ -1,4 +1,4 @@
-package {
+package com.liquidenthusiasm.engine {
 
 import flash.display.Sprite;
 import flash.text.TextField;
@@ -6,7 +6,7 @@ import flash.text.TextField;
 import org.flixel.FlxGame;
 
     [SWF(width="800", height="600", backgroundColor="#000000")]
-    [Frame(factoryClass="Preloader")]
+    [Frame(factoryClass="com.liquidenthusiasm.engine.Preloader")]
 
     public class Flixelgame extends FlxGame
     {
@@ -14,7 +14,7 @@ import org.flixel.FlxGame;
         {
             forceDebugger = true;
             trace("About to load game");
-            super(800,600,MainMenuState,1,50,50);
+            super(800,600,IntroLogoState,1,50,50);
         }
     }
 }

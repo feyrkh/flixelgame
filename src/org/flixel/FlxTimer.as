@@ -121,7 +121,6 @@ package org.flixel
 			_loopsCounter = 0;
 			return this;
 		}
-		
 		/**
 		 * Stops the timer and removes it from the timer manager.
 		 */

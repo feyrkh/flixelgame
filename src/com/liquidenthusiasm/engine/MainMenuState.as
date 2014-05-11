@@ -1,6 +1,8 @@
-package
+package com.liquidenthusiasm.engine
 {
-	import flash.geom.Rectangle;
+import com.liquidenthusiasm.timer.ResetOnInputTimer;
+
+import flash.geom.Rectangle;
 	import flash.net.SharedObject;
 	import org.flixel.plugin.photonstorm.FlxDisplay;
 
@@ -9,10 +11,12 @@ package
 
 	public class MainMenuState extends FlxState
 	{
-		var mainMenuButtons:FlxGroup;
-		var saveGameButtons:FlxGroup;
+		private var mainMenuButtons:FlxGroup;
+        private var saveGameButtons:FlxGroup;
+        private var demoTimer:FlxTimer;
 		
 		public override function create():void {
+            FlxG.flash(FlxG.BLACK, 2);
 			trace("Loading menu state");
 			var newGameButton:FlxButton = new FlxButton(FlxG.width/2, 0, "New Game", startNewGame);
 			var loadGameButton:FlxButton = new FlxButton(FlxG.width / 2, 0, "Load Game", showSaveGames);
@@ -25,7 +29,25 @@ package
 			
 			saveGameButtons = new FlxGroup();
 			FlxG.mouse.show();
+
+            demoTimer = new ResetOnInputTimer();
+            demoTimer.start(15, -1, fadeToDemo);
 		}
+
+        public override function destroy():void {
+            super.destroy();
+            demoTimer.stop();
+            mainMenuButtons = null;
+            saveGameButtons = null;
+        }
+
+        public override function update():void {
+            super.update();
+        }
+
+        private function fadeToDemo():void {
+            FlxG.fade(FlxG.BLACK, 1, function() {FlxG.switchState(new DemoState());});
+        }
 		
 		private function startNewGame():void {
 			trace("New game button selected");
