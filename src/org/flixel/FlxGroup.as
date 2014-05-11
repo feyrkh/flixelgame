@@ -601,5 +601,41 @@ package org.flixel
 				return -_sortOrder;
 			return 0;
 		}
-	}
+
+        private var _x:int = 0
+        private var _y:int = 0
+
+        public function set x(nx:int):void
+        {
+            var offset:int = nx - _x
+
+            for each (var object:* in members) {
+                object.x += offset
+            }
+
+            _x = nx
+        }
+
+        public function get x():int {return _x}
+
+        public function set y(ny:int):void
+        {
+            var offset:int = ny - _y
+
+            for each (var object:* in members) {
+                object.y += offset
+            }
+
+            _y = ny
+        }
+
+        public function get y():int {return _y}
+
+        public override function set exists(val:Boolean):void {
+            super.exists = val;
+            for each (var object:* in members) {
+                object.exists = val;
+            }
+        }
+    }
 }

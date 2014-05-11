@@ -285,7 +285,7 @@ package org.flixel
 				label.draw();
 			}
 		}
-		
+
 		/**
 		 * Updates the size of the text field to match the button.
 		 */

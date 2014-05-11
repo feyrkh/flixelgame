@@ -1,38 +1,55 @@
 package com.liquidenthusiasm.engine
 {
+import com.liquidenthusiasm.engine.save.LoadMenu;
+import com.liquidenthusiasm.engine.save.SaveGameIndex;
 import com.liquidenthusiasm.timer.ResetOnInputTimer;
+import com.liquidenthusiasm.timer.SimpleTimer;
 
 import flash.geom.Rectangle;
 	import flash.net.SharedObject;
-	import org.flixel.plugin.photonstorm.FlxDisplay;
+import flash.utils.Dictionary;
+
+import org.flixel.plugin.photonstorm.FlxDisplay;
 
 	import org.flixel.*;
 	import org.flixel.plugin.DebugPathDisplay;
 
 	public class MainMenuState extends FlxState
 	{
-		private var mainMenuButtons:FlxGroup;
-        private var saveGameButtons:FlxGroup;
+		private var mainMenuButtons:Menu;
+        private var saveGameButtons:Menu;
         private var demoTimer:FlxTimer;
+        private var menuChangeTimer:SimpleTimer;
+        private const MENU_OFFSET:int = 10000;
 		
 		public override function create():void {
             FlxG.flash(FlxG.BLACK, 2);
+            menuChangeTimer = new SimpleTimer();
 			trace("Loading menu state");
-			var newGameButton:FlxButton = new FlxButton(FlxG.width/2, 0, "New Game", startNewGame);
-			var loadGameButton:FlxButton = new FlxButton(FlxG.width / 2, 0, "Load Game", showSaveGames);
-			mainMenuButtons = new FlxGroup();
-			mainMenuButtons.add(newGameButton);
-			mainMenuButtons.add(loadGameButton);
-			newGameButton.y = FlxG.height / 2 - newGameButton.height / 2 - 5;
-			loadGameButton.y = FlxG.height / 2 + loadGameButton.height / 2 + 5;
-			add(mainMenuButtons);
-			
-			saveGameButtons = new FlxGroup();
-			FlxG.mouse.show();
 
+            var callbacks:Dictionary = new Dictionary();
+            callbacks["New Game"] = startNewGame;
+            callbacks["Load"] = showSaveGames;
+            mainMenuButtons = new Menu();
+            mainMenuButtons.setOptions(new Array("New Game", "Load"), callbacks);
+            add(mainMenuButtons);
+            mainMenuButtons.centerOnScreen();
+			
+			saveGameButtons = new LoadMenu(Flixelgame.SAVE_STATE_PREFIX,
+                cancelLoadGame,
+                loadGame);
+            saveGameButtons.centerOnScreen();
+            saveGameButtons.y -= MENU_OFFSET;
+            add(saveGameButtons);
+
+			FlxG.mouse.show();
             demoTimer = new ResetOnInputTimer();
             demoTimer.start(15, -1, fadeToDemo);
 		}
+
+        private function loadGame(saveslot:String):void {
+            trace("Loading "+saveslot);
+        }
 
         public override function destroy():void {
             super.destroy();
@@ -46,7 +63,7 @@ import flash.geom.Rectangle;
         }
 
         private function fadeToDemo():void {
-            FlxG.fade(FlxG.BLACK, 1, function() {FlxG.switchState(new DemoState());});
+            FlxG.flash(FlxG.BLACK, 1, function() {FlxG.switchState(new DemoState());});
         }
 		
 		private function startNewGame():void {
@@ -55,14 +72,14 @@ import flash.geom.Rectangle;
 		
 		private function showSaveGames():void {
 			trace("Load game button selected");
-			mainMenuButtons.exists = false;
-			saveGameButtons.exists = true;
+            mainMenuButtons.y -= MENU_OFFSET;
+            saveGameButtons.y += MENU_OFFSET;
 		}
 		
 		private function cancelLoadGame():void {
 			trace("Back to main menu");
-			mainMenuButtons.exists = true;
-			saveGameButtons.exists = false;
+            saveGameButtons.y -= MENU_OFFSET;
+            mainMenuButtons.y += MENU_OFFSET;
 		}
 	}
 }

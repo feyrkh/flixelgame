@@ -38,7 +38,7 @@ package org.flixel.plugin.photonstorm
 		/**
 		 * This function is called when the button is clicked.
 		 */
-		protected var _onClick:Function;
+		public var onUp:Function;
 		/**
 		 * Tracks whether or not the button is currently pressed.
 		 */
@@ -123,7 +123,7 @@ package org.flixel.plugin.photonstorm
 			_y = Y;
 			width = Width;
 			height = Height;
-			_onClick = Callback;
+			onUp = Callback;
 			
 			buttonNormal = new FlxExtendedSprite(X, Y);
 			buttonNormal.makeGraphic(Width, Height, borderColor);
@@ -167,7 +167,7 @@ package org.flixel.plugin.photonstorm
 			}
 		}
 		
-		public function set x(newX:int):void
+		public override function set x(newX:int):void
 		{
 			_x = newX;
 			
@@ -181,12 +181,12 @@ package org.flixel.plugin.photonstorm
 			}
 		}
 		
-		public function get x():int
+		public override function get x():int
 		{
 			return _x;
 		}
 		
-		public function set y(newY:int):void
+		public override function set y(newY:int):void
 		{
 			_y = newY;
 			
@@ -200,7 +200,7 @@ package org.flixel.plugin.photonstorm
 			}
 		}
 		
-		public function get y():int
+		public override function get y():int
 		{
 			return _y;
 		}
@@ -382,7 +382,7 @@ package org.flixel.plugin.photonstorm
 				textHighlight = null;
 			}
 			
-			_onClick = null;
+			onUp = null;
 			enterCallback = null;
 			leaveCallback = null;
 			
@@ -394,9 +394,13 @@ package org.flixel.plugin.photonstorm
 		 */
 		protected function onMouseUp(event:MouseEvent):void
 		{
-			if (exists && visible && active && (_status == PRESSED) && (_onClick != null) && (pauseProof || !FlxG.paused))
+			if (exists && visible && active && (_status == PRESSED) && (onUp != null) && (pauseProof || !FlxG.paused))
 			{
-				_onClick.apply(null, onClickParams);
+                if(onUp.length == 0) {
+                    onUp();
+                } else {
+                    onUp.apply(null, onClickParams);
+                }
 			}
 		}
 		
@@ -486,7 +490,7 @@ package org.flixel.plugin.photonstorm
 		 */
 		public function setOnClickCallback(callback:Function, params:Array = null):void
 		{
-			_onClick = callback;
+			onUp = callback;
 			
 			if (params)
 			{

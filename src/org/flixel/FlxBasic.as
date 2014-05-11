@@ -20,7 +20,7 @@ package org.flixel
 		/**
 		 * Controls whether <code>update()</code> and <code>draw()</code> are automatically called by FlxState/FlxGroup.
 		 */
-		public var exists:Boolean;
+        private var _exists:Boolean;
 		/**
 		 * Controls whether <code>update()</code> is automatically called by FlxState/FlxGroup.
 		 */
@@ -53,7 +53,7 @@ package org.flixel
 		public function FlxBasic()
 		{
 			ID = -1;
-			exists = true;
+			_exists = true;
 			active = true;
 			visible = true;
 			alive = true;
@@ -130,7 +130,7 @@ package org.flixel
 		public function kill():void
 		{
 			alive = false;
-			exists = false;
+			_exists = false;
 		}
 		
 		/**
@@ -140,7 +140,7 @@ package org.flixel
 		public function revive():void
 		{
 			alive = true;
-			exists = true;
+			_exists = true;
 		}
 		
 		/**
@@ -150,5 +150,13 @@ package org.flixel
 		{
 			return FlxU.getClassName(this,true);
 		}
-	}
+
+        public function get exists():Boolean {
+            return _exists;
+        }
+
+        public function set exists(value:Boolean):void {
+            _exists = value;
+        }
+    }
 }

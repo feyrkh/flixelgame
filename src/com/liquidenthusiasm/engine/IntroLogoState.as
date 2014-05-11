@@ -1,10 +1,12 @@
 package com.liquidenthusiasm.engine {
+import flashx.textLayout.formats.Float;
+
 import org.flixel.FlxG;
 import org.flixel.FlxState;
 import org.flixel.FlxText;
 
 public class IntroLogoState extends FlxState {
-    private static const duration:int = 2;
+    private static const duration:int = 0.1;
 
     public override function create():void {
         FlxG.flash(FlxG.BLACK, duration, fadeOut);

@@ -10,6 +10,8 @@ import org.flixel.FlxGame;
 
     public class Flixelgame extends FlxGame
     {
+        public static const SAVE_STATE_PREFIX:String = "LiquidEnthusiasmGame";
+
         public function Flixelgame():void
         {
             forceDebugger = true;
