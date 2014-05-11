@@ -14,10 +14,14 @@ public class Menu extends FlxGroup {
     public var xSpacing = 5;
     public var xMargin = 5;
     public var yMargin = 5;
+    public var defaultButtonWidth = 100;
+    public var defaultButtonHeight = 20;
+    public var defaultFontSize = 8;
+
     private var arrangeHorizontal:Boolean;
     private var _height:int;
     private var _width:int;
-    private var buttons:Array;
+    public var buttons:Array;
     private var defaultCallback:Function;
 
     public function Menu(buttonFactory:Function = null, arrangeHorizontal:Boolean = false, defaultCallback:Function = null) {
@@ -27,6 +31,14 @@ public class Menu extends FlxGroup {
         if(!this.buttonFactory) {
             this.buttonFactory = defaultButtonFactory;
         }
+    }
+
+    public override function destroy():void {
+        super.destroy();
+        buttons = null;
+        defaultCallback = null;
+        buttonFactory = null;
+        options = null;
     }
 
     public function setOptions(options:Array, callbacks:Dictionary = null) {
@@ -49,14 +61,20 @@ public class Menu extends FlxGroup {
             button.y = y;
             if(arrangeHorizontal) {
                 x = x + button.width + xSpacing;
-                if(tallest < button.height) tallest = button.height;
+                if(tallest < button.height) {
+                    tallest = button.height;
+                    this._height = yMargin*2 + tallest;
+                }
+                this._width = xMargin + button.x + button.width;
             } else {
-                 y = y + button.height + ySpacing;
-                if(widest < button.width) widest = button.width;
+                y = y + button.height + ySpacing;
+                if(widest < button.width) {
+                    widest = button.width;
+                    this._width = xMargin*2 + widest;
+                }
+                this._height = yMargin + button.y + button.height;
             }
         }
-        this._width = x + xMargin;
-        this._height = y + yMargin;
         for each(var button in buttons) {
             if(arrangeHorizontal) {
                 button.y = yMargin + (tallest - button.height) / 2;
@@ -66,7 +84,7 @@ public class Menu extends FlxGroup {
         }
     }
 
-    private function defaultButtonFactory(option:String, data:*):FlxButton {
+    private function defaultButtonFactory(option:String, data:*):FlxButtonPlus {
         var callback:Function = defaultCallback;
         var appliedCallback;
         if(data && data instanceof Function) {
@@ -80,7 +98,7 @@ public class Menu extends FlxGroup {
         } else {
             appliedCallback = callback;
         }
-        var newButton:FlxButton = new FlxButton(0, 0, option, appliedCallback);
+        var newButton:FlxButtonPlus = new FlxButtonPlus(0, 0, appliedCallback, null, option, defaultButtonWidth, defaultButtonHeight, defaultFontSize);
         return newButton;
     }
 

@@ -26,7 +26,7 @@ public class LoadMenu extends Menu {
         saveSlots.push("Cancel");
         saveSlots.push("create save");
         saveSlots.push("wipe saves");
-        var callbacks = new Dictionary();
+        var callbacks:Dictionary = new Dictionary();
         callbacks["(no saved games)"] = function() {};
         callbacks["Cancel"] = cancelCallback;
         callbacks["create save"] = function() {
@@ -36,6 +36,8 @@ public class LoadMenu extends Menu {
         callbacks["wipe saves"] = function() {
             Flixelgame.Save.wipeSaves();
         };
+
+        this.defaultButtonWidth = 300;
         setOptions(saveSlots, callbacks);
     }
 

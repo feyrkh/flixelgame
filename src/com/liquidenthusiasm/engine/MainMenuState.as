@@ -18,13 +18,13 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
 	{
 		private var mainMenuButtons:Menu;
         private var saveGameButtons:Menu;
-        private var demoTimer:FlxTimer;
-        private var menuChangeTimer:SimpleTimer;
         private const MENU_OFFSET:int = 10000;
-		
-		public override function create():void {
+
+        private static const ATTRACT_MODE_DELAY:int = 1;
+
+        public override function create():void {
             FlxG.flash(FlxG.BLACK, 2);
-            menuChangeTimer = new SimpleTimer();
+            var menuChangeTimer = new SimpleTimer();
 			trace("Loading menu state");
 
             var callbacks:Dictionary = new Dictionary();
@@ -43,8 +43,10 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
             add(saveGameButtons);
 
 			FlxG.mouse.show();
-            demoTimer = new ResetOnInputTimer();
-            demoTimer.start(15, -1, fadeToDemo);
+            var demoTimer = new ResetOnInputTimer();
+            demoTimer.start(ATTRACT_MODE_DELAY, -1, fadeToDemo);
+
+            MemoryTracker.gcAndCheck();
 		}
 
         private function loadGame(saveslot:String):void {
@@ -53,9 +55,6 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
 
         public override function destroy():void {
             super.destroy();
-            demoTimer.stop();
-            mainMenuButtons = null;
-            saveGameButtons = null;
         }
 
         public override function update():void {
@@ -63,7 +62,12 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
         }
 
         private function fadeToDemo():void {
-            FlxG.flash(FlxG.BLACK, 1, function() {FlxG.switchState(new DemoState());});
+            FlxG.fade(FlxG.BLACK, 1, switchToDemoState);
+        }
+
+        private function switchToDemoState():void {
+            var demo = new DemoState();
+            FlxG.switchState(demo);
         }
 		
 		private function startNewGame():void {

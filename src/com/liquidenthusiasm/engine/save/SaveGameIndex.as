@@ -27,7 +27,7 @@ public class SaveGameIndex {
     public function saveState(slotName:String, slotData:*):Boolean {
         return openSaveFile(function(saveSys:FlxSave) {
             saveSys.data[slotName] = slotData;
-            var slots = deleteSaveSlotIndexEntry(slotName);
+            var slots:Array = deleteSaveSlotIndexEntry(slotName);
             slots.unshift(slotName);
             saveSys.data[SAVE_INDEX_NAME] = slots;
         });
@@ -59,11 +59,12 @@ public class SaveGameIndex {
     }
 
     private function openSaveFile(cmd:Function):Boolean {
-        var status = false;
+        var status:Boolean = false;
         if (status = saveSys.bind(saveStateName)) {
             cmd(saveSys);
         } else {
-            trace("Failed to open save slot for " + saveStateName);
+            trace("Failed to open save slot for "
+                    + saveStateName);
             FlxG.log("Failed to open save slot for " + saveStateName);
         }
         return saveSys.close() && status;

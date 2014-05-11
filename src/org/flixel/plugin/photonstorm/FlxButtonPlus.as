@@ -115,7 +115,7 @@ package org.flixel.plugin.photonstorm
 		 * @param	Width		The width of the button.
 		 * @param	Height		The height of the button.
 		 */
-		public function FlxButtonPlus(X:int, Y:int, Callback:Function, Params:Array = null, Label:String = null, Width:int = 100, Height:int = 20):void
+		public function FlxButtonPlus(X:int, Y:int, Callback:Function, Params:Array = null, Label:String = null, Width:int = 100, Height:int = 20, fontSize:int=16):void
 		{
 			super(4);
 			
@@ -146,11 +146,11 @@ package org.flixel.plugin.photonstorm
 			
 			if (Label != null)
 			{
-				textNormal = new FlxText(X, Y + 3, Width, Label);
-				textNormal.setFormat(null, 8, 0xffffffff, "center", 0xff000000);
+				textNormal = new FlxText(X, Y + (Height/2), Width, Label);
+				textNormal.setFormat(null, fontSize, 0xffffffff, "center", 0xff000000);
 				
-				textHighlight = new FlxText(X, Y + 3, Width, Label);
-				textHighlight.setFormat(null, 8, 0xffffffff, "center", 0xff000000);
+				textHighlight = new FlxText(X,  Y + (Height/2), Width, Label);
+				textHighlight.setFormat(null, fontSize, 0xffffffff, "center", 0xff000000);
 				
 				add(textNormal);
 				add(textHighlight);

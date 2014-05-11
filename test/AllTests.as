@@ -1,6 +1,8 @@
 package {
 import asunit.framework.TestCase;
 
+import com.liquidenthusiasm.engine.MenuTest;
+
 import com.liquidenthusiasm.engine.save.SaveGameIndexTest;
 
 import com.liquidenthusiasm.timer.EndEarlyOnInputTimerTest;
@@ -18,6 +20,9 @@ public class AllTests extends TestSuite
     public function AllTests()
     {
         super();
+        // com.liquidenthusiasm.engine
+        addAllMethodsOf(MenuTest);
+
         // com.liquidenthusiasm.engine.save
         addAllMethodsOf(SaveGameIndexTest);
 

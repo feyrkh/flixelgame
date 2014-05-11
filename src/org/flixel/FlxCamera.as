@@ -343,8 +343,8 @@ package org.flixel
 				_fxFlashAlpha -= FlxG.elapsed/_fxFlashDuration;
 				if((_fxFlashAlpha <= 0) && (_fxFlashComplete != null))
 					_fxFlashComplete();
-			}
-			
+                }
+
 			//Update the "fade" special effect
 			if((_fxFadeAlpha > 0.0) && (_fxFadeAlpha < 1.0))
 			{
@@ -354,9 +354,9 @@ package org.flixel
 					_fxFadeAlpha = 1.0;
 					if(_fxFadeComplete != null)
 						_fxFadeComplete();
+                    }
 				}
-			}
-			
+
 			//Update the "shake" special effect
 			if(_fxShakeDuration > 0)
 			{

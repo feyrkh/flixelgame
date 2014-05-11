@@ -474,6 +474,12 @@ package org.flixel
 		{ 
 			//Basic reset stuff
 			FlxG.resetCameras();
+            CONFIG::debug
+            {
+                MemoryTracker.track(FlxG.camera, "Switching from "+_state+" to "+_requestedState);
+                MemoryTracker.stage = this.stage;
+                MemoryTracker.gcAndCheck();
+            }
 			FlxG.resetInput();
 			FlxG.destroySounds();
 			FlxG.clearBitmapCache();

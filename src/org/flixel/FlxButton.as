@@ -24,7 +24,9 @@ package org.flixel
 		 * Used with public variable <code>status</code>, means pressed (usually from mouse click).
 		 */
 		static public var PRESSED:uint = 2;
-		
+
+        public var fontSize:int = 8;
+
 		/**
 		 * The text that appears on the button.
 		 */
@@ -105,7 +107,7 @@ package org.flixel
 			if(Label != null)
 			{
 				label = new FlxText(0,0,80,Label);
-				label.setFormat(null,8,0x333333,"center");
+				label.setFormat(null,fontSize,0x333333,"center");
 				labelOffset = new FlxPoint(-1,3);
 			}
 			loadGraphic(ImgDefaultButton,true,false,80,20);
@@ -125,7 +127,7 @@ package org.flixel
 			_pressed = false;
 			_initialized = false;
 		}
-		
+
 		/**
 		 * Called by the game state when state is changed (if this object belongs to the state)
 		 */
