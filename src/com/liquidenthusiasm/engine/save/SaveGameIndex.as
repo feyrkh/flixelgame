@@ -1,17 +1,21 @@
 package com.liquidenthusiasm.engine.save {
-import com.liquidenthusiasm.engine.Flixelgame;
-
 import org.flixel.FlxG;
-
 import org.flixel.FlxSave;
 
 public class SaveGameIndex {
-    private static var saveSys = new FlxSave();
+    private var saveSys:FlxSave = new FlxSave();
+    private var saveStateName:String;
+    private static const SAVE_INDEX_NAME:String = "__lqen__saveSlotIndex__";
 
-    public static function getSaveSlotNames():Array {
+    public function SaveGameIndex(saveStateName:String):void {
+        this.saveStateName = saveStateName;
+    }
+
+
+    public function getSaveSlotNames():Array {
         var slots:Array = null;
-        if (saveSys.bind(Flixelgame.SAVE_STATE_PREFIX)) {
-            slots = saveSys.data["saveIndex"];
+        if (saveSys.bind(saveStateName)) {
+            slots = saveSys.data[SAVE_INDEX_NAME];
         }
         saveSys.close();
         if (!slots) {
@@ -20,33 +24,56 @@ public class SaveGameIndex {
         return slots.slice();
     }
 
-    public static function saveGame(saveName:String, saveData):void {
-        openSaveFile(function(saveSys:FlxSave) {
-            saveSys.data[saveName] = saveData;
-            var slots = saveSys.data["saveIndex"] || new Array();
-            slots.filter(function(el) { return el != saveName });
-            slots.unshift(saveName);
-            saveSys.data["saveIndex"] = slots;
+    public function saveState(slotName:String, slotData:*):Boolean {
+        return openSaveFile(function(saveSys:FlxSave) {
+            saveSys.data[slotName] = slotData;
+            var slots = deleteSaveSlotIndexEntry(slotName);
+            slots.unshift(slotName);
+            saveSys.data[SAVE_INDEX_NAME] = slots;
         });
     }
 
-    public static function wipeSaves():void {
-        openSaveFile(function(saveSys:FlxSave) {
+
+    private function deleteSaveSlotIndexEntry(slotName:String):Array {
+        var slots = saveSys.data[SAVE_INDEX_NAME] || new Array();
+        slots = slots.filter(function (el) {
+            return el != slotName
+        });
+        saveSys.data[SAVE_INDEX_NAME] = slots;
+        return slots;
+    }
+
+    public function wipeSaves():Boolean {
+        return openSaveFile(function(saveSys:FlxSave) {
             saveSys.data = {};
             saveSys.erase();
         });
     }
 
-    private static function openSaveFile(cmd:Function):void {
-        var saveName = Flixelgame.SAVE_STATE_PREFIX;
-        if (saveSys.bind(saveName)) {
-            cmd(saveSys);
-        } else {
-            trace("Failed to open save slot for " + saveName);
-            FlxG.log("Failed to open save slot for " + saveName);
-        }
-        saveSys.close();
+    public function getSaveState(slotName:String):* {
+        var data:* = null;
+        openSaveFile(function(saveSys:FlxSave) {
+            data = saveSys.data[slotName];
+        });
+        return data;
     }
 
+    private function openSaveFile(cmd:Function):Boolean {
+        var status = false;
+        if (status = saveSys.bind(saveStateName)) {
+            cmd(saveSys);
+        } else {
+            trace("Failed to open save slot for " + saveStateName);
+            FlxG.log("Failed to open save slot for " + saveStateName);
+        }
+        return saveSys.close() && status;
+    }
+
+    public function deleteState(slotName:String):Boolean {
+        return openSaveFile(function(saveSys:FlxSave) {
+            delete saveSys.data[slotName];
+            deleteSaveSlotIndexEntry(slotName);
+        })
+    }
 }
 }

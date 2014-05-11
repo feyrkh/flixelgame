@@ -19,7 +19,7 @@ public class LoadMenu extends Menu {
         _cancelCallback = cancelCallback;
         _selectedCallback = selectedCallback;
         super(null, false, buttonSelected);
-        var saveSlots:Array = SaveGameIndex.getSaveSlotNames();
+        var saveSlots:Array = Flixelgame.Save.getSaveSlotNames();
         if(saveSlots.length == 0) {
             saveSlots.push("(no saved games)");
         }
@@ -31,10 +31,10 @@ public class LoadMenu extends Menu {
         callbacks["Cancel"] = cancelCallback;
         callbacks["create save"] = function() {
             var saveName = gamePrefix+int(FlxG.random()*1000);
-            SaveGameIndex.saveGame(saveName, {});
+            Flixelgame.Save.saveState(saveName, {});
         };
         callbacks["wipe saves"] = function() {
-            SaveGameIndex.wipeSaves();
+            Flixelgame.Save.wipeSaves();
         };
         setOptions(saveSlots, callbacks);
     }
