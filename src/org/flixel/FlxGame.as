@@ -477,7 +477,7 @@ package org.flixel
             CONFIG::debug
             {
                 MemoryTracker.track(_requestedState, "Switching from "+_state+" to "+_requestedState);
-                MemoryTracker.stage = this.stage;
+                MemoryTracker.stage = FlxG.stage;
                 //MemoryTracker.gcAndCheck();
             }
 			FlxG.resetInput();
