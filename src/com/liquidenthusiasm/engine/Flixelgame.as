@@ -41,7 +41,7 @@ import com.liquidenthusiasm.engine.save.SaveGameIndex;
         debuggerAdded = true;
         var theMiner:TheMiner = new TheMiner();
         addChild(theMiner);
-        TheMiner.Do(TheMinerActionEnum.TOGGLE_INTERFACE_MEMORY_PROFILER);
+        //TheMiner.Do(TheMinerActionEnum.TOGGLE_INTERFACE_MEMORY_PROFILER);
     }
 
         protected override function update():void {

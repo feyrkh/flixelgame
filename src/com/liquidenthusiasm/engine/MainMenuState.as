@@ -38,7 +38,6 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
 			saveGameButtons = new LoadMenu(Flixelgame.SAVE_STATE_PREFIX,
                 cancelLoadGame,
                 loadGame);
-            saveGameButtons.centerOnScreen();
             saveGameButtons.y -= MENU_OFFSET;
             add(saveGameButtons);
 

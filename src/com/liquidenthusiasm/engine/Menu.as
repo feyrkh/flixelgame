@@ -8,7 +8,7 @@ import org.flixel.plugin.photonstorm.FlxButtonPlus;
 
 public class Menu extends FlxGroup {
     private var options:Array;
-    private var buttonFactory:Function;
+    protected var buttonFactory:Function;
 
     public var ySpacing = 5;
     public var xSpacing = 5;
@@ -20,7 +20,7 @@ public class Menu extends FlxGroup {
 
     private var arrangeHorizontal:Boolean;
     private var _height:int;
-    private var _width:int;
+    protected var _width:int;
     public var buttons:Array;
     private var defaultCallback:Function;
 
@@ -34,16 +34,16 @@ public class Menu extends FlxGroup {
     }
 
     public override function destroy():void {
-        super.destroy();
         buttons = null;
         defaultCallback = null;
         buttonFactory = null;
         options = null;
+        super.destroy();
     }
 
     public function setOptions(options:Array, callbacks:Dictionary = null) {
-        var x = xMargin;
-        var y = yMargin;
+        var x = xMargin + this.x;
+        var y = yMargin + this.y;
         var widest = 0;
         var tallest = 0;
         if(this.buttons) {
@@ -84,9 +84,9 @@ public class Menu extends FlxGroup {
         }
         for each(var button in buttons) {
             if(arrangeHorizontal) {
-                button.y = yMargin + (tallest - button.height) / 2;
+                button.y = yMargin + (tallest - button.height) / 2 + this.y;
             } else {
-                button.x = xMargin + (widest - button.width) / 2;
+                button.x = xMargin + (widest - button.width) / 2 + this.x;
             }
         }
     }
