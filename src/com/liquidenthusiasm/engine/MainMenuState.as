@@ -20,7 +20,7 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
         private var saveGameButtons:Menu;
         private const MENU_OFFSET:int = 10000;
 
-        private static const ATTRACT_MODE_DELAY:int = 1;
+        private static const ATTRACT_MODE_DELAY:int = 15;
 
         public override function create():void {
             FlxG.flash(FlxG.BLACK, 2);
@@ -45,8 +45,6 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
 			FlxG.mouse.show();
             var demoTimer = new ResetOnInputTimer();
             demoTimer.start(ATTRACT_MODE_DELAY, -1, fadeToDemo);
-
-            MemoryTracker.gcAndCheck();
 		}
 
         private function loadGame(saveslot:String):void {

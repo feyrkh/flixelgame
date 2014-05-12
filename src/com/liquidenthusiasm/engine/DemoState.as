@@ -9,7 +9,7 @@ import org.flixel.FlxTimer;
 public class DemoState extends FlxState {
     private var text:FlxText;
 
-    private static const ATTRACT_MODE_DURATION:int = 1;
+    private static const ATTRACT_MODE_DURATION:int = 15;
 
     public override function create():void {
         var endDemoTimer = new EndEarlyOnInputTimer();
@@ -21,7 +21,6 @@ public class DemoState extends FlxState {
             text.x = FlxG.random()*FlxG.width;
             text.y = FlxG.random()*FlxG.height;
         });
-        MemoryTracker.gcAndCheck();
     }
 
     public override function destroy():void {

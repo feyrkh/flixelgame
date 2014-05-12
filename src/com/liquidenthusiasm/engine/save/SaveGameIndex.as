@@ -67,7 +67,9 @@ public class SaveGameIndex {
                     + saveStateName);
             FlxG.log("Failed to open save slot for " + saveStateName);
         }
-        return saveSys.close() && status;
+
+        status = saveSys.close() && status;
+        return status;
     }
 
     public function deleteState(slotName:String):Boolean {

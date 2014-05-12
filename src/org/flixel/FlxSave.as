@@ -75,7 +75,11 @@ package org.flixel
 			try
 			{
 				_sharedObject = SharedObject.getLocal(name);
-			}
+                CONFIG::debug
+                {
+                    MemoryTracker.track(_sharedObject, Name);
+                }
+            }
 			catch(e:Error)
 			{
 				FlxG.log("ERROR: There was a problem binding to\nthe shared object data from FlxSave.");

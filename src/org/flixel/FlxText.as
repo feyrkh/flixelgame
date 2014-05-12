@@ -42,7 +42,10 @@ package org.flixel
 		{
 			super(X,Y);
 			makeGraphic(Width,1,0);
-			
+
+            CONFIG::debug {
+                ;//MemoryTracker.track(this, Text);
+            }
 			if(Text == null)
 				Text = "";
 			_textField = new TextField();

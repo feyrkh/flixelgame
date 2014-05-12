@@ -46,11 +46,18 @@ public class Menu extends FlxGroup {
         var y = yMargin;
         var widest = 0;
         var tallest = 0;
+        if(this.buttons) {
+            this.buttons.length = 0;
+        }
+        CONFIG::debug {
+            MemoryTracker.track(this, options[0]);
+        }
         this.buttons = new Array();
         for each(var option:String in options) {
             var callback = null;
             if(callbacks) callback = callbacks[option];
             var button = buttonFactory(option, callback);
+
             add(button);
             if(!button.onUp) {
                 button.onUp = defaultCallback;

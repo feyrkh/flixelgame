@@ -17,7 +17,6 @@ import com.liquidenthusiasm.engine.save.SaveGameIndex;
     public class Flixelgame extends FlxGame
     {
         public static const SAVE_STATE_PREFIX:String = "LiquidEnthusiasmGame";
-        private const DEBUGGER_ENABLED:Boolean = true;
 
         public static const Save:SaveGameIndex = new SaveGameIndex(SAVE_STATE_PREFIX);
         private var debuggerAdded:Boolean = false;
@@ -35,9 +34,6 @@ import com.liquidenthusiasm.engine.save.SaveGameIndex;
 
             trace("About to load game");
             super(800,600,IntroLogoState,1,50,50);
-            if(autoAddDebugger) {
-                setupDebugger();
-            }
         }
 
     private function setupDebugger():void {
@@ -50,6 +46,9 @@ import com.liquidenthusiasm.engine.save.SaveGameIndex;
 
         protected override function update():void {
             super.update();
+            if(autoAddDebugger && !debuggerAdded) {
+                setupDebugger();
+            }
         }
     }
 }
