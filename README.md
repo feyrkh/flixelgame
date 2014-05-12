@@ -7,7 +7,6 @@
 ** Constants in /src/com/liquidenthusiasm/engine/Flixelgame.as
 ** Update registered class aliases in the Flixelgame constructor if you're using the SaveGameIndex for saving/loading
 ** /html-template/index.template.html if you want to change the page layout
-* Add the .swc files from the project root as libraries to your project
 * In the IntelliJ Project structure, make sure you have a module named 'Release' under Settings/Modules/flixelgame
 ** General tab
 *** Name: Release
