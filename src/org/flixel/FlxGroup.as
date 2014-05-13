@@ -379,7 +379,31 @@ package org.flixel
 				}
 			}
 		}
-		
+
+		/**
+		 * Go through and call the specified function on all members of the group.
+		 * Currently only works on functions that have no required parameters.
+		 *
+		 * @param	FunctionName	The string representation of the function you want to call on each object, for example "kill()" or "init()".
+		 * @param	Recurse			Default value is true, meaning if <code>callAll()</code> encounters a member that is a group, it will call <code>callAll()</code> on that group rather than calling the group's function.
+		 */
+		public function runAll(Fn:Function,Recurse:Boolean=true):void
+		{
+			var basic:FlxBasic;
+			var i:uint = 0;
+			while(i < length)
+			{
+				basic = members[i++] as FlxBasic;
+				if(basic != null)
+				{
+					if(Recurse && (basic is FlxGroup))
+						(basic as FlxGroup).runAll(Fn,Recurse);
+					else
+						Fn(basic);
+				}
+			}
+		}
+
 		/**
 		 * Call this function to retrieve the first object with exists == false in the group.
 		 * This is handy for recycling in general, e.g. respawning enemies.
