@@ -123,7 +123,7 @@ import flash.utils.getQualifiedClassName;
 public class Enumerable
 {
     private var constName:String;
-    private var index:uint;
+    protected var index:uint;
     public function Enumerable(index:uint = 0)	{	this.index = index;	}
     /**
      * Initializes the specified class object into a faux enumeration datatype.
