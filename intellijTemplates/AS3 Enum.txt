@@ -1,0 +1,18 @@
+#parse("ActionScript File Header.as")
+package ${PACKAGE_NAME}#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") #end{
+import com.liquidenthusiasm.engine.Enumerable;
+${Access_modifier} class ${NAME} extends Enumerable {
+    private static var _allItems:Vector.<${NAME}>;
+    public static const ENUM_VAL:${NAME} = new ${NAME}(0);
+
+    public function ${NAME}(index:uint) {
+        super(index);
+    }
+    {
+        _allItems = Vector.<${NAME}>(initEnum(${NAME}, false));
+    }
+    public static function get allItems():Vector.<${NAME}> {
+        return _allItems;
+    }
+}
+}
