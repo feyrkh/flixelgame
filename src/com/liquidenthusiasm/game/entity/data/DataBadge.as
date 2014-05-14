@@ -1,25 +1,28 @@
 package com.liquidenthusiasm.game.entity.data {
+import flash.net.registerClassAlias;
+
 import org.flixel.FlxGroup;
 import org.flixel.FlxPoint;
 import org.flixel.FlxText;
 import org.flixel.plugin.photonstorm.FlxExtendedSprite;
 
-public class InputBadge extends FlxGroup {
-    private var badgeShape:InputBadgeShape;
-    private var badgeColor:InputBadgeColor;
+public class DataBadge extends FlxGroup {
+    registerClassAlias("com.liquidenthusiasm.game.entity.data.DataBadge", DataBadge);
+    private var badgeShape:DataBadgeShape;
+    private var badgeColor:DataBadgeColor;
     private var badgeNumber:int;
     private var text:FlxText;
     private var sprite:FlxExtendedSprite;
     private const defaultBadgeScale:FlxPoint = new FlxPoint(1, 1);
 
-    public function InputBadge(x:int, y:int, shape:InputBadgeShape, badgeColor:InputBadgeColor, number:int) {
+    public function DataBadge(x:int, y:int, shape:DataBadgeShape, badgeColor:DataBadgeColor, number:int) {
         super();
         this.badgeShape = shape;
         this.badgeColor = badgeColor;
         this.badgeNumber = number;
         sprite = new FlxExtendedSprite(0, 0, shape.graphic);
         sprite.scale = defaultBadgeScale;
-        if(badgeColor != InputBadgeColor.WHITE) {
+        if(badgeColor != DataBadgeColor.WHITE) {
             sprite.color = badgeColor.color;
         }
         sprite.setOriginToCorner();

@@ -1,7 +1,7 @@
 package com.liquidenthusiasm.game {
-import com.liquidenthusiasm.game.entity.data.InputBadge;
-import com.liquidenthusiasm.game.entity.data.InputBadgeColor;
-import com.liquidenthusiasm.game.entity.data.InputBadgeShape;
+import com.liquidenthusiasm.game.entity.data.DataBadge;
+import com.liquidenthusiasm.game.entity.data.DataBadgeColor;
+import com.liquidenthusiasm.game.entity.data.DataBadgeShape;
 
 import org.flixel.FlxG;
 import org.flixel.FlxGroup;
@@ -15,10 +15,10 @@ public class ProgramEditorState extends FlxState {
         FlxG.bgColor = 0xff505050;
         var y:Number = 50;
         var i:int = 0;
-        for each(var shape in InputBadgeShape.allItems) {
+        for each(var shape in DataBadgeShape.allItems) {
             var x:Number = 50;
-            for each(var color in InputBadgeColor.allItems) {
-                var inputBadge:InputBadge = new InputBadge(x, y, shape, color, i++);
+            for each(var color in DataBadgeColor.allItems) {
+                var inputBadge:DataBadge = new DataBadge(x, y, shape, color, i++);
                 badgeGroup.add(inputBadge);
                 x += 50;
             }
@@ -42,7 +42,7 @@ public class ProgramEditorState extends FlxState {
         badgeGroup.runAll(applyScale, false);
     }
 
-    private function applyScale(badge:InputBadge):void {
+    private function applyScale(badge:DataBadge):void {
         badge.scale = scale;
     }
 }
