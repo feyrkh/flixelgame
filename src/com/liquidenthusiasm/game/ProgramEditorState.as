@@ -1,4 +1,6 @@
 package com.liquidenthusiasm.game {
+import com.liquidenthusiasm.engine.scene.DialogSceneElement;
+import com.liquidenthusiasm.engine.scene.LinearScene;
 import com.liquidenthusiasm.game.entity.data.DataBadge;
 import com.liquidenthusiasm.game.entity.data.DataBadgeColor;
 import com.liquidenthusiasm.game.entity.data.DataBadgeShape;
@@ -24,7 +26,16 @@ public class ProgramEditorState extends FlxState {
             }
             y += 50;
         }
-        add(badgeGroup);
+        //add(badgeGroup);
+
+        var scene:LinearScene = new LinearScene();
+        var text:DialogSceneElement = new DialogSceneElement(scene);
+        scene.addFrames(
+                function(scene:LinearScene) { scene.add(text);  },
+                text.buildSceneFrames("Line 1", "Another line that's really really really really really really really really really really really really really really really really really really really really really long",
+                        "Final text line")
+        );
+        this.add(scene);
     }
 
     public override function destroy():void {
@@ -35,6 +46,7 @@ public class ProgramEditorState extends FlxState {
     private var totalElapsed:Number = 0;
     private var scale = new FlxPoint(1,1);
     public override function update():void {
+        super.update();
         totalElapsed += FlxG.elapsed;
         badgeGroup.x = Math.sin(totalElapsed/2)*60;
         var curScaleStep = int(totalElapsed/3) % 6;
