@@ -27,15 +27,21 @@ public class ProgramEditorState extends FlxState {
             y += 50;
         }
         //add(badgeGroup);
+        rerunFrames();
+        this.add(scene);
+    }
 
-        var scene:LinearScene = new LinearScene();
-        var text:DialogSceneElement = new DialogSceneElement(scene);
+    var scene:LinearScene = new LinearScene();
+    var text:DialogSceneElement = new DialogSceneElement(scene);
+
+    private function rerunFrames():void {
         scene.addFrames(
                 function(scene:LinearScene) { scene.add(text);  },
-                text.buildSceneFrames("Line 1", "Another line that's really really really really really really really really really really really really really really really really really really really really really long",
-                        "Final text line")
+                text.buildSceneFrames("Line 1", "Another line that's really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really long",
+                        "Final text line"),
+                function() { rerunFrames() }
         );
-        this.add(scene);
+
     }
 
     public override function destroy():void {

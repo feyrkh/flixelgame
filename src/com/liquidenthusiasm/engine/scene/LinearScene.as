@@ -13,16 +13,24 @@ public class LinearScene extends FlxGroup implements Scene {
     internal var _frames:Array;
     internal var _frameIdx:int;
     private var _paused:Boolean;
+    public var finished:Boolean;
 
     public function LinearScene() {
         _frames = [];
         _frameIdx = 0;
+        finished = false;
+    }
+
+    public override function destroy():void {
+        super.destroy();
+        _frames = null;
+        finished = true;
     }
 
     public function addFrames(...frames) {
         for each(var frame in frames) {
             if(frame is Array) {
-                _frames = _frames.concat(frames);
+                _frames = _frames.concat(frame);
             } else {
                 _frames.push(frame);
             }
@@ -47,11 +55,19 @@ public class LinearScene extends FlxGroup implements Scene {
     }
 
     public override function update():void {
-        while(_frameIdx < _frames.length && !paused) {
-            var frameFn = _frames[_frameIdx++];
-            frameFn(this);
-        }
         super.update();
+        while(!paused && !finished && _frames) {
+            if(_frameIdx < _frames.length) {
+                var frameFn = _frames[_frameIdx++];
+                if(frameFn.length == 1) {
+                    frameFn(this);
+                } else {
+                    frameFn();
+                }
+            } else {
+                finished = true;
+            }
+        }
     }
 }
 }

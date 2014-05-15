@@ -11,6 +11,7 @@ import com.liquidenthusiasm.timer.SimpleTimer;
 import org.flixel.FlxG;
 
 import org.flixel.FlxGroup;
+import org.flixel.FlxSprite;
 import org.flixel.FlxText;
 
 public class DialogSceneElement extends FlxGroup {
@@ -21,12 +22,17 @@ public class DialogSceneElement extends FlxGroup {
     private var textField:FlxText;
     private var scene:Scene;
     private var displayFinished:Boolean;
-    public var lettersPerSecond:Number = 1;
+    public var lettersPerSecond:Number = 30;
     private var curLettersPerSecond:Number;
+    private var continueCursor:FlxSprite = new FlxSprite();
 
     public function DialogSceneElement(scene:Scene) {
         this.scene = scene;
         this.textField = new FlxText(0, 0, FlxG.width, "");
+        this.add(textField);
+        this.add(continueCursor);
+        continueCursor.visible = false;
+        continueCursor.alpha = 0.5;
     }
 
     public function display(text:String):void {
@@ -35,7 +41,9 @@ public class DialogSceneElement extends FlxGroup {
         this.targetText = text;
         this.displayFinished = false;
         this.index = 0;
-        timer.start(1.0 / lettersPerSecond, text.length, targetTextTick);
+        curLettersPerSecond = lettersPerSecond;
+        continueCursor.visible = false;
+        timer.start(1.0 / curLettersPerSecond, text.length, targetTextTick);
     }
 
     private function targetTextTick():void {
@@ -51,15 +59,26 @@ public class DialogSceneElement extends FlxGroup {
 
     private function textFinished():void {
         this.displayFinished = true;
+        continueCursor.x = textField.x + textField.width - continueCursor.width - 2;
+        continueCursor.y = textField.y + textField.height - continueCursor.height - 2;
+        timer.start(1.5, 0, toggleCursor);
+    }
+
+    private function toggleCursor():void {
+        continueCursor.visible = !continueCursor.visible;
     }
 
     public override function update():void {
         super.update();
+        if(this.displayFinished) {
+            this.scene.paused = false;
+        }
         if(!FlxG.paused && (FlxG.keys.justPressed("SPACE") || FlxG.mouse.justPressed())) {
             if(this.displayFinished) {
                 this.scene.paused = false;
             } else {
-                this.curLettersPerSecond = this.lettersPerSecond * 10;
+                this.curLettersPerSecond = this.lettersPerSecond * 200;
+                timer.start(1.0 / curLettersPerSecond, targetText.length - index, targetTextTick);
             }
         }
     }
@@ -70,8 +89,7 @@ public class DialogSceneElement extends FlxGroup {
 
     private function buildSceneFrame(text:String, idx, arr):Function {
         var el = this;
-        return function(scene:Scene) {
-            el.curLettersPerSecond = el.lettersPerSecond;
+        return function() {
             el.display(text);
         }
     }
