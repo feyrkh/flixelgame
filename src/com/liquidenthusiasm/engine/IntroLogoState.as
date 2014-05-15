@@ -1,4 +1,6 @@
 package com.liquidenthusiasm.engine {
+import com.liquidenthusiasm.game.ProgramEditorState;
+
 import flashx.textLayout.formats.Float;
 
 import org.flixel.FlxG;
@@ -14,7 +16,7 @@ public class IntroLogoState extends FlxState {
     }
 
     private function fadeOut():void {
-        FlxG.fade(FlxG.BLACK, duration, function():void { FlxG.switchState(new MainMenuState()) });
+        FlxG.fade(FlxG.BLACK, duration, function():void { FlxG.switchState(new ProgramEditorState()) });
     }
 }
 }
