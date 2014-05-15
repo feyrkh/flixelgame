@@ -49,7 +49,7 @@ public class LoadMenu extends Menu {
         setOptions(options, callbacks);
         for(var i=0;i<saveSlots.length;i++) {
             var deleteButton:FlxButtonPlus = this.deleteButtonFactory(saveSlots[i]);
-            deleteButton.x = buttons[i].x + buttons[i].width + 5;
+            deleteButton.x = buttons[i].width + 10;
             deleteButton.y = buttons[i].y;
             add(deleteButton);
         }
@@ -87,6 +87,8 @@ public class LoadMenu extends Menu {
         }
         clear();
         buttons.length = 0;
+        this.x = 0;
+        this.y = 0;
     }
 
     private function deleteButtonFactory(option:String):FlxButtonPlus {
