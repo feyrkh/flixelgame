@@ -2,6 +2,7 @@ package com.liquidenthusiasm.engine
 {
 import com.liquidenthusiasm.engine.save.LoadMenu;
 import com.liquidenthusiasm.engine.save.SaveGameIndex;
+import com.liquidenthusiasm.game.ProgramEditorState;
 import com.liquidenthusiasm.timer.ResetOnInputTimer;
 import com.liquidenthusiasm.timer.SimpleTimer;
 
@@ -69,6 +70,7 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
 		
 		private function startNewGame():void {
 			trace("New game button selected");
+            FlxG.switchState(new ProgramEditorState());
 		}
 		
 		private function showSaveGames():void {

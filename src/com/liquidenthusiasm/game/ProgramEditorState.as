@@ -26,8 +26,9 @@ public class ProgramEditorState extends FlxState {
             }
             y += 50;
         }
-        //add(badgeGroup);
+        add(badgeGroup);
         rerunFrames();
+        scene.y = 50 * DataBadgeShape.allItems.length + 100;
         this.add(scene);
     }
 
@@ -36,10 +37,12 @@ public class ProgramEditorState extends FlxState {
 
     private function rerunFrames():void {
         scene.addFrames(
-                function(scene:LinearScene) { scene.add(text);  },
+                function(scene:LinearScene) {
+                    scene.add(text);
+                },
                 text.buildSceneFrames("Line 1", "Another line that's really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really really long",
                         "Final text line"),
-                function() { rerunFrames() }
+                rerunFrames
         );
 
     }

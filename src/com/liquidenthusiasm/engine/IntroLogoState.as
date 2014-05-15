@@ -16,7 +16,7 @@ public class IntroLogoState extends FlxState {
     }
 
     private function fadeOut():void {
-        FlxG.fade(FlxG.BLACK, duration, function():void { FlxG.switchState(new ProgramEditorState()) });
+        FlxG.fade(FlxG.BLACK, duration, function():void { FlxG.switchState(new MainMenuState()) });
     }
 }
 }

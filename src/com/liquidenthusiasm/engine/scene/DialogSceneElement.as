@@ -33,6 +33,11 @@ public class DialogSceneElement extends FlxGroup {
         this.add(continueCursor);
         continueCursor.visible = false;
         continueCursor.alpha = 0.5;
+        var group:FlxGroup = scene as FlxGroup;
+        if(group != null) {
+            this.x = group.x;
+            this.y = group.y;
+        }
     }
 
     public function display(text:String):void {
@@ -70,9 +75,6 @@ public class DialogSceneElement extends FlxGroup {
 
     public override function update():void {
         super.update();
-        if(this.displayFinished) {
-            this.scene.paused = false;
-        }
         if(!FlxG.paused && (FlxG.keys.justPressed("SPACE") || FlxG.mouse.justPressed())) {
             if(this.displayFinished) {
                 this.scene.paused = false;

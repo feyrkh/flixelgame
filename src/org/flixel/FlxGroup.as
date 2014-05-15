@@ -182,6 +182,18 @@ package org.flixel
 			//Don't bother adding an object twice.
 			if(members.indexOf(TargetObject) >= 0)
 				return TargetObject;
+
+            var obj:FlxObject = TargetObject as FlxObject;
+            if(obj != null) {
+                obj.x += this.x;
+                obj.y += this.y;
+            } else {
+                var grp:FlxGroup = TargetObject as FlxGroup;
+                if(grp != null) {
+                    grp.x += this.x;
+                    grp.y += this.y;
+                }
+            }
 			
 			//First, look for a null entry where we can add the object.
 			var i:uint = 0;
