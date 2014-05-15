@@ -69,6 +69,7 @@ import org.flixel.plugin.photonstorm.FlxDisplay;
 		
 		private function startNewGame():void {
 			trace("New game button selected");
+            FlxG.switchState(new SampleState());
 		}
 		
 		private function showSaveGames():void {

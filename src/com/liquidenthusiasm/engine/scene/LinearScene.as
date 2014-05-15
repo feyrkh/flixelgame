@@ -39,11 +39,21 @@ public class LinearScene extends FlxGroup implements Scene {
 
     public function nextFrame(frameIdx:*=null):void {
         if(frameIdx == null) {
-            frameIdx = _frameIdx + 1;
+            frameIdx = _frameIdx;
         }
+        paused = false;
+        _frameIdx = frameIdx + 1;
     }
 
     public function endScene():void {
+        if(!finished) {
+            finished = true;
+            if(_frames && _frames.length) {
+                _frameIdx = _frames.length - 1;
+
+            }
+        }
+        this.finished = true;
     }
 
     public function get paused():Boolean {
@@ -58,14 +68,24 @@ public class LinearScene extends FlxGroup implements Scene {
         super.update();
         while(!paused && !finished && _frames) {
             if(_frameIdx < _frames.length) {
-                var frameFn = _frames[_frameIdx++];
-                if(frameFn.length == 1) {
-                    frameFn(this);
-                } else {
-                    frameFn();
-                }
+                runFrame();
             } else {
                 finished = true;
+            }
+        }
+    }
+
+    private function runFrame(idx:int = -1):void {
+        if(idx < 0) {
+            idx = _frameIdx;
+        }
+        _frameIdx = idx+1;
+        var frameFn = _frames[idx];
+        if(frameFn) {
+            if(frameFn.length == 1) {
+                frameFn(this);
+            } else {
+                frameFn();
             }
         }
     }

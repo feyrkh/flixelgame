@@ -8,6 +8,8 @@
 package com.liquidenthusiasm.engine.scene {
 import asunit.framework.TestCase;
 
+import com.liquidenthusiasm.engine.scene.element.DialogSceneElement;
+
 import org.flixel.FlxGroup;
 import org.flixel.FlxPoint;
 import org.flixel.FlxSprite;
@@ -16,9 +18,6 @@ import spark.primitives.Line;
 
 public class LinearSceneTest extends TestCase {
     var scene:LinearScene;
-    var sceneData:Array.<SceneFrame> = [
-        {}
-    ];
 
     protected override function setUp():void {
         scene = new LinearScene();

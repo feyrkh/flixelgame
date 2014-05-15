@@ -5,7 +5,8 @@
  * Time: 2:27 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.liquidenthusiasm.engine.scene {
+package com.liquidenthusiasm.engine.scene.element {
+import com.liquidenthusiasm.engine.scene.*;
 import com.liquidenthusiasm.timer.SimpleTimer;
 
 import org.flixel.FlxG;
@@ -25,6 +26,7 @@ public class DialogSceneElement extends FlxGroup {
     public var lettersPerSecond:Number = 30;
     private var curLettersPerSecond:Number;
     private var continueCursor:FlxSprite = new FlxSprite();
+    private var _height:Number;
 
     public function DialogSceneElement(scene:Scene) {
         this.scene = scene;
@@ -43,6 +45,11 @@ public class DialogSceneElement extends FlxGroup {
         this.index = 0;
         curLettersPerSecond = lettersPerSecond;
         continueCursor.visible = false;
+        textField.text = text;
+        this._height = textField.height;
+        textField.text = "";
+        this.x = 0;
+        this.y = FlxG.height - this.height;
         timer.start(1.0 / curLettersPerSecond, text.length, targetTextTick);
     }
 
@@ -70,9 +77,6 @@ public class DialogSceneElement extends FlxGroup {
 
     public override function update():void {
         super.update();
-        if(this.displayFinished) {
-            this.scene.paused = false;
-        }
         if(!FlxG.paused && (FlxG.keys.justPressed("SPACE") || FlxG.mouse.justPressed())) {
             if(this.displayFinished) {
                 this.scene.paused = false;
@@ -92,6 +96,10 @@ public class DialogSceneElement extends FlxGroup {
         return function() {
             el.display(text);
         }
+    }
+
+    public function get height():Number {
+        return _height;
     }
 }
 }
