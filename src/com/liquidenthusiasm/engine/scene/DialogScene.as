@@ -44,18 +44,20 @@ public class DialogScene extends LinearScene {
         return this;
     }
 
-    public function char(pos:*, char:FlxObject):DialogScene {
+    public function char(pos:*, character:FlxObject):DialogScene {
         this.addFrames(function(scene:DialogScene) {
-            var p:ScenePosition = convertToScenePosition(pos);
-            if(charPositions[p]) {
-                charLayer.remove(charPositions[p]);
+            if(charPositions[pos]) {
+                charLayer.remove(charPositions[pos]);
             }
+            charLayer.add(character);
+            charPositions[pos] = character;
+            var p:ScenePosition = convertToScenePosition(pos);
             if(p) {
-                charLayer.add(char);
-                charPositions[p] = char;
-                char.x = p.coords.x;
-                char.y = p.coords.y;
-                char["scale"] = p.scale;
+                character.x = p.coords.x;
+                character.y = p.coords.y;
+                character["scale"] = p.scale;
+            } else {
+                trace("Invalid scene position: "+pos);
             }
         });
         return this;
@@ -84,12 +86,14 @@ public class DialogScene extends LinearScene {
 
     public function say(pos:*, ...text):DialogScene {
         this.addFrames(function() {
-            var char = charPositions[convertToScenePosition(pos)];
-            if(char) {
+            var char = charPositions[pos];
+            if(pos) {
                 charLayer.runAll(dim);
-                bright(char);
-            }  else if(!pos) {
+            } else {
                 charLayer.runAll(bright);
+            }
+            if(char) {
+                bright(char);
             }
         });
         this.addFrames(dialog.buildSceneFrames(text));
